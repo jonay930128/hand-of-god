@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://xxx:3306/test?useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="username" value="xxx"/>
+        <property name="password" value="xxx"/>
+        <!--initialSize: 初始化连接-->
+        <property name="initialSize" value="10"/>
+        <!--maxIdle: 最大空闲连接，此配置在Druid中无效，所以进行注释（也可以保留单不起如何作用）-->
+        <!--<property name="maxIdle" value="5"/>-->
+        <!--minIdle: 最小空闲连接-->
+        <property name="minIdle" value="3"/>
+        <!--maxActive: 最大连接数量-->
+        <property name="maxActive" value="50"/>
+        <!--removeAbandoned: 是否自动回收超时连接-->
+        <property name="removeAbandoned" value="true"/>
+        <!--removeAbandonedTimeout: 超时时间(以秒数为单位)-->
+        <property name="removeAbandonedTimeout" value="300"/>
+        <!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒-->
+        <property name="maxWait" value="5000"/>
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+
+        <!-- 根据Druid官方文档，使用mysql或当oracle分库分表时，关闭此项 -->
+        <property name="poolPreparedStatements" value="false"/>
+
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat"/>
+    </bean>
+</beans>

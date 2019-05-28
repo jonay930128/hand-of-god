@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="defaultStatementTimeout" value="30"/><!--超时时间 单位s-->
+        <!--<setting name="logImpl" value="STDOUT_LOGGING"/>-->
+        <setting name="logImpl" value="SLF4J"/>  <!--指定使用slf4j日志框架-->
+        <setting name="logPrefix" value="org.mybatis.sqlmap."/>
+    </settings>
+
+
+
+</configuration>

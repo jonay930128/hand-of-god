@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上帝之手</title>
+    <link rel="stylesheet" href="css/element/index.css">
+</head>
+<body>
+<div id="app">
+    <template>
+
+        <el-menu
+                :default-active="activeIndex1"
+                class="el-menu-demo"
+                mode="horizontal"
+                @select="handleSelect"
+                background-color="#545c64"
+                text-color="#fff"
+                active-text-color="#ffd04b">
+            <el-menu-item index="1">首页</el-menu-item>
+            <el-menu-item index="2" :disabled="!haveDataSource">数据库操作</el-menu-item>
+            <el-menu-item index="3" :disabled="!haveRedis">缓存操作</el-menu-item>
+            <el-menu-item index="4" disabled>MQ操作</el-menu-item>
+        </el-menu>
+        <hr>
+
+        <!-- 首页 -->
+        <div v-if="option == 1">
+            <span>欢迎使用上帝之手</span>
+        </div>
+        <!-- 数据库操作 -->
+        <div v-if="option == 2" style="width: 80%;height: 60%">
+            <el-input
+                    type="textarea"
+                    :rows="4"
+                    placeholder="请输入内容"
+                    v-model="textarea">
+            </el-input>
+            <br>
+            <el-button type="primary" @click="dbCommit">提交</el-button>
+        </div>
+    </template>
+</div>
+
+<script src="js/vue/vue.js"></script>
+<script src="js/element/index.js"></script>
+<script src="js/axios/axios.min.js"></script>
+<script src="js/qs/qs.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                textarea:'',
+                option:1,
+                activeIndex1:'1',
+                haveDataSource:false,
+                haveRedis:false
+            }
+        },
+        created(){
+            this.initMenu();
+        },
+        methods: {
+            async initMenu() {
+                let response = await axios.post('/hand-of-god/initMenu',null);
+                let result = response.data;
+                if (result.success) {
+                    this.haveDataSource = result.data.haveDataSource;
+                    this.haveRedis = result.data.haveRedis;
+                }
+            },
+            handleSelect(key, keyPath) {
+                this.option = key;
+            },
+            async dbCommit() {
+                let response = await axios.post('/hand-of-god/dbOption',Qs.stringify({"sqlText":this.textarea}));
+                let result = response.data;
+                result.success ? this.$message.success("操作成功,影响" + result.data + "条记录") : this.$message.error(result.msg);
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

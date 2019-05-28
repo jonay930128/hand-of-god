@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%C{1},%M\(\),%L] [%X{logid}] [%X{Jst_TRACE_ID}]- %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LOGGER-DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/log/handOfGod/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/log/handOfGod/debug.log.%d{yyyy-w}</fileNamePattern>
+            <maxHistory>2</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%C{1},%M\(\),%L] [%X{logid}] [%X{Jst_TRACE_ID}]- %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="LOGGER-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/log/handOfGod/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/log/handOfGod/error.log.%d{yyyy-w}</fileNamePattern>
+            <maxHistory>2</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%C{1},%M\(\),%L] [%X{logid}] [%X{Jst_TRACE_ID}]- %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="LOGGER-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/log/handOfGod/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/log/handOfGod/info.log.%d{yyyy-w}</fileNamePattern>
+            <maxHistory>2</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%C{1},%M\(\),%L] [%X{logid}] [%X{Jst_TRACE_ID}]- %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <logger name="com.jd.fly.angel.eye" additivity="false" level="TRACE">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="LOGGER-DEBUG"/>
+        <appender-ref ref="LOGGER-INFO"/>
+        <appender-ref ref="LOGGER-ERROR"/>
+    </logger>
+
+    <logger name="com.jd.nethp" additivity="false" level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="LOGGER-DEBUG"/>
+        <appender-ref ref="LOGGER-INFO"/>
+        <appender-ref ref="LOGGER-ERROR"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="LOGGER-DEBUG"/>
+        <appender-ref ref="LOGGER-INFO"/>
+        <appender-ref ref="LOGGER-ERROR"/>
+    </root>
+</configuration>
